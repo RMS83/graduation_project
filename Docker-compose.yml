@@ -1,0 +1,53 @@
+version: '3.9'
+
+volumes:
+  pg_data:
+
+networks:
+  app_network:
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: order_app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    depends_on:
+      - db
+    entrypoint: ./entrypoint.sh
+    networks:
+      - app_network
+
+  db:
+    image: postgres:latest
+    container_name: order_postgres
+    ports:
+      - '5431:5432'
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    networks:
+      - app_network
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+#  nginx:
+#      build:
+#        dockerfile: Dockerfile.nginx
+#      ports:
+#        - "80:80"
+##      volumes:
+##        - nginx:/etc/nginx/conf.d/
+#      depends_on:
+#        - app
+#      restart: unless-stopped
+#      networks:
+#        - app_network
+
+
