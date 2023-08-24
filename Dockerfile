@@ -23,7 +23,7 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 COPY . /code
 
 # file execution permissions
-RUN chmod 744 -v code/entrypoint.sh
+RUN chmod +x code/entrypoint.sh
 
 # set work directory
 WORKDIR /code

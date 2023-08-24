@@ -1,0 +1,533 @@
+# примеры API-запросов
+
+#1 регистрация пользователя (автоматически создает сущности покупателя/продавца/корзины)+
+POST http://localhost:8000/register/
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "sroman2007@mail.ru",
+  "first_name": "P3",
+  "last_name": "P3",
+  "is_active": false,
+  "is_superuser": true,
+  "is_staff": true,
+  "type": "vendor"
+}
+###
+
+#2 обновить токен +
+POST http://localhost:8000/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NDI1NjQ0NSwiaWF0IjoxNjkxNjY0NDQ1LCJqdGkiOiI1ZmEzNDVkYTY1MDQ0MWYxYTU4ZGEyZWI5NzA3NWIzNCIsInVzZXJfaWQiOjJ9.FuLSIibNX9lHB2Hz9OEW-QGqC7gBvGOIpOezEDAOg0Y",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUwODQ1LCJpYXQiOjE2OTE2NjQ0NDUsImp0aSI6IjZmMDE5MGY5MzdhMjQyNTU4OTUyNjZhMzIzNmNmYzNkIiwidXNlcl9pZCI6Mn0.DzJ_oKwvOnwXRcmXJwHuq-MNSwZK1XgzdgcrgnDR0eo"
+}
+###
+
+#3 получить себя если не админ или весь список пользователей если админ +
+GET  http://localhost:8000/users/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+###
+
+#4 получить конкретного пользователя если админ или себя если не админ +
+GET  http://localhost:8000/users/?id=29
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+###
+
+#5 редактировать пользователя (себя) +
+PUT http://localhost:8000/users/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+
+{
+ "is_active": true
+}
+###
+
+#6 редактировать пользователя по id (может только суперюзер) +
+PUT http://localhost:8000/users/?id=29
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+
+{
+  "is_active": false
+}
+###
+
+#7 обновление пользователя (себя) +
+PATCH http://localhost:8000/users/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+
+{
+  "email": "P4@mail.ru",
+  "first_name": "P4",
+  "last_name": "P4"
+}
+###
+
+#8 обновление любого пользователя суперюзером +
+PATCH http://localhost:8000/users/?id=29
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTAwNzI4LCJpYXQiOjE2OTI4MTQzMjgsImp0aSI6ImZlMDBjMjE1MzUwNDRlZTY4NmYyYzUyMmE3YTcxNjg3IiwidXNlcl9pZCI6Mjl9.JUBFp_TMHpCxjwndKvCK1UfmvJ8THPYrgvHJLEv-ZSY
+
+{
+  "first_name": "P4"
+}
+###
+
+#9 залогиниться получить\обновить токен (поля чувствительны к регистру) +
+POST http://localhost:8000/login/
+Content-Type: application/json
+
+{
+  "email": "P1@mail.ru",
+  "password": 1234
+}
+###
+
+#10 получить поставщиков +
+GET http://127.0.0.1:8000/api/v1/vendors/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1MDc3LCJpYXQiOjE2OTIxMzg2NzcsImp0aSI6IjRkMTJkM2VlN2RmODRmNWI5NmYyZDc2YTQxZDViZDVlIiwidXNlcl9pZCI6Nn0.WNJBhTVPE3kZOMNNgJpnkgkELAXowsYdkhT3uxr2bEw
+###
+
+#11 получить покупателей +
+GET http://127.0.0.1:8000/api/v1/purchasers/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#12 получить поставщика +
+GET http://127.0.0.1:8000/api/v1/vendors/2/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+###
+
+#13 получить покупателя +
+GET http://127.0.0.1:8000/api/v1/purchasers/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#14 обновить поставщика (только сам себя)+
+PATCH http://127.0.0.1:8000/api/v1/vendors/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+
+{
+  "vendor_name": "TryLtd"
+}
+###
+
+#15 обновить поставщика (только сам себя)+
+PUT http://127.0.0.1:8000/api/v1/vendors/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxOTIwNDMzLCJpYXQiOjE2OTE4MzQwMzMsImp0aSI6IjI0ZGQ4MDE0YjJiODQ2NGU5YmY5YWJkMzJkOWU2YzcxIiwidXNlcl9pZCI6Nn0.LaaCDshYOHJl-giJAcG3Hfn1L-_GRUVgCWm40yXbm-A
+
+{
+  "vendor_name": "FreshLtd",
+  "vendor_phone": "+7(999)999-99-77",
+  "accepting_orders": true,
+  "vendor_address": "Спб., Товарищеский 12 - п.6"
+}
+###
+
+#16 обновить покупателя (только сам себя) +
+PATCH http://127.0.0.1:8000/api/v1/purchasers/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+
+{
+  "purchaser_name": "IvanovLtd2"
+}
+###
+
+#17 обновить покупателя (только сам себя)+
+PUT http://127.0.0.1:8000/api/v1/purchasers/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+
+{
+  "purchaser_name": "IvanovLtd1",
+  "purchaser_phone": "+7(999)999-99-99",
+  "purchaser_address": "Спб., Товарищеский 12 - п.6"
+}
+###
+
+#18 удалить покупателя - себя, Внимание! удаляет все связанные сущности: юзера, токен, корзину, магазины и т.д) +
+DELETE http://127.0.0.1:8000/api/v1/purchaser/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+###
+
+#19 удалить продавца - себя, Внимание! удаляет все связанные сущности: юзера, токен, склады и т.д) +
+DELETE http://127.0.0.1:8000/api/v1/purchaser/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+###
+
+#20 получить категории +
+GET http://127.0.0.1:8000/api/v1/categories/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1MDc3LCJpYXQiOjE2OTIxMzg2NzcsImp0aSI6IjRkMTJkM2VlN2RmODRmNWI5NmYyZDc2YTQxZDViZDVlIiwidXNlcl9pZCI6Nn0.WNJBhTVPE3kZOMNNgJpnkgkELAXowsYdkhT3uxr2bEw
+###
+
+#21 получить категорию +
+GET http://127.0.0.1:8000/api/v1/categories/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzUxNTYwLCJpYXQiOjE2OTE2NjUxNjAsImp0aSI6IjM0YTY0YmY2NWZiYjRjZDE4MjY1ODk3NmIxMDcyMzI2IiwidXNlcl9pZCI6Mn0.f6GgihTyGIbRuaWZAg_xrvZMXVrOj6vgpnrRH2ejnuI
+###
+
+#22 создать категорию (только админ или вендор) +
+POST http://127.0.0.1:8000/api/v1/categories/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "name": "Ноутбуки",
+  "description": "Современные"
+}
+###
+
+#23 редактировать категорию (только админ) +
+PATCH http://127.0.0.1:8000/api/v1/categories/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "name": "Ноутбуки",
+  "description": "Домашние и производственные workstation"
+}
+###
+
+#24 удалить категорию (только админ) +
+DELETE http://127.0.0.1:8000/api/v1/categories/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#25 получить количество видов продуктов в каждой категории у вендоров
+GET http://127.0.0.1:8000/api/v1/vendor_categories/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#26 создать отношение категории продукта к вендору (только вендор)
+POST http://127.0.0.1:8000/api/v1/vendor_categories/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "category": 3
+}
+###
+
+#27 удалить отношение категории продукта к вендору (только созданное самим собой)
+DELETE http://127.0.0.1:8000/api/v1/vendor_categories/5/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#28 создать продукт (только вендор/админ) +
+POST http://127.0.0.1:8000/api/v1/products/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU1OTM1LCJpYXQiOjE2OTI4Njk1MzUsImp0aSI6IjUyNmEyYTIzNGY1OTRkZGJiNTY0YmJlMTZkODMzYzRmIiwidXNlcl9pZCI6Mn0.F4akOLm9Dibhf1vn9gU6qnrtN18IyvhHzRwbCYAewrM
+
+{
+  "name": "IPhone 14 PRO",
+  "category": 1
+}
+###
+
+#29 редактировать продукт (только админ) +
+PATCH http://127.0.0.1:8000/api/v1/products/5/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "name": "Verty",
+  "category": 1
+}
+###
+
+#30 создать характеристику (только вендор/админ) +
+POST http://127.0.0.1:8000/api/v1/characteristics/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "name": "Цвет"
+}
+###
+
+#31 получить характеристики (только вендор/админ) +
+GET http://127.0.0.1:8000/api/v1/characteristics/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#32 редактировать характеристики (только админ) +
+PUT http://127.0.0.1:8000/api/v1/characteristics/4/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+
+{
+  "name": "Цвет"
+}
+###
+
+#33 удалить характеристики (только админ) +
+DELETE http://127.0.0.1:8000/api/v1/characteristics/4/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMjI1Mjc1LCJpYXQiOjE2OTIxMzg4NzUsImp0aSI6IjExOTRkZDQ5M2NjMjQzMzJhZTA0NzA3NjA0N2FkNjk1IiwidXNlcl9pZCI6Mn0.4KYZQ1O3uL4Ma_AripSNZj4PUv9LR7KHCRGCarfKdDA
+###
+
+#34 создать позицию склада (вендор)+
+POST http://127.0.0.1:8000/api/v1/stocks/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU1OTM1LCJpYXQiOjE2OTI4Njk1MzUsImp0aSI6IjUyNmEyYTIzNGY1OTRkZGJiNTY0YmJlMTZkODMzYzRmIiwidXNlcl9pZCI6Mn0.F4akOLm9Dibhf1vn9gU6qnrtN18IyvhHzRwbCYAewrM
+
+{
+    "art": "ph1",
+    "model": "AFGT/b/A",
+    "description": "Смартфон от Apple",
+    "price": 90000,
+    "price_rrc": 109000,
+    "quantity": 12,
+    "product": 3
+}
+###
+
+#35 получить позиции(ю) своего склада +
+GET http://127.0.0.1:8000/api/v1/stocks/8/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU1OTM1LCJpYXQiOjE2OTI4Njk1MzUsImp0aSI6IjUyNmEyYTIzNGY1OTRkZGJiNTY0YmJlMTZkODMzYzRmIiwidXNlcl9pZCI6Mn0.F4akOLm9Dibhf1vn9gU6qnrtN18IyvhHzRwbCYAewrM
+
+###
+
+#36 удалить позицию своего склада +
+DELETE http://127.0.0.1:8000/api/v1/stocks/8/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU1OTM1LCJpYXQiOjE2OTI4Njk1MzUsImp0aSI6IjUyNmEyYTIzNGY1OTRkZGJiNTY0YmJlMTZkODMzYzRmIiwidXNlcl9pZCI6Mn0.F4akOLm9Dibhf1vn9gU6qnrtN18IyvhHzRwbCYAewrM
+
+###
+
+#37 добавить характеристику товару на складе +
+POST http://127.0.0.1:8000/api/v1/product_characteristics/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU1OTM1LCJpYXQiOjE2OTI4Njk1MzUsImp0aSI6IjUyNmEyYTIzNGY1OTRkZGJiNTY0YmJlMTZkODMzYzRmIiwidXNlcl9pZCI6Mn0.F4akOLm9Dibhf1vn9gU6qnrtN18IyvhHzRwbCYAewrM
+
+{
+    "stock": 8,
+    "characteristic": 1,
+    "value": "SpaceBlack"
+}
+###
+
+#38 создать розничный магазин (покупатель)
+POST http://127.0.0.1:8000/api/v1/retail_stores/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+
+{
+  "store_name": "PurMag1",
+  "store_address": "127549, Москва, Алтуфьевское шоссе, 64В, пом.5",
+  "store_phone": "+7(999)999-99-35"
+}
+###
+
+#39 получить магазины (покупатель - свои, админ/продавец - все)
+GET http://127.0.0.1:8000/api/v1/retail_stores/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#40 удалить магазин (покупатель - свои, админ - все)
+DELETE http://127.0.0.1:8000/api/v1/retail_stores/4/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#41 создать позицию корзины (только покупатель) +
+POST http://127.0.0.1:8000/api/v1/cart_positions/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+
+{
+  "retail_store": 2,
+  "stock": 4,
+  "quantity": 2
+}
+###
+
+#42 получить позиции корзины (только покупатель) +
+GET http://127.0.0.1:8000/api/v1/cart_positions/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#43 обновить позицию корзины (только покупатель) +
+PATCH http://127.0.0.1:8000/api/v1/cart_positions/12/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+
+{
+  "quantity": 4
+}
+###
+
+#44 удалить позицию корзины (только покупатель) +
+DELETE http://127.0.0.1:8000/api/v1/cart_positions/10/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#45 получить всю корзину покупателя (создается автоматичеки и связана с покупателем O2O) +
+GET http://127.0.0.1:8000/api/v1/shopping_carts/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#46 очистить корзину покупателя (не удалит сущность корзыны, удалить сущность корзины можно только удалив покупателя) +
+DELETE http://127.0.0.1:8000/api/v1/shopping_carts/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#47 создать ордер из своей корзины +
+POST http://127.0.0.1:8000/api/v1/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#48 удалить свой ордер если не подтверждены позиции +
+DELETE http://127.0.0.1:8000/api/v1/orders/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+
+#30 создать склад (только вендор/админ) +
+POST http://127.0.0.1:8000/api/v1/products/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzQyNjAzLCJpYXQiOjE2OTA3NTA2MDMsImp0aSI6IjFjMTYzOGE0MzEyNzRlZGRhNzNhZGM5NDQ3YWMyNTIyIiwidXNlcl9pZCI6Mn0.iJSw7YwP3eN8jLMg-oW8SyajhaXZb1GImPcP8xYlIqg
+
+{
+  "name": "Огурцы",
+  "category": 1
+}
+###
+
+
+
+
+#30 создать позицию корзины +
+POST http://127.0.0.1:8000/api/v1/cart_positions/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzQyNjAzLCJpYXQiOjE2OTA3NTA2MDMsImp0aSI6IjFjMTYzOGE0MzEyNzRlZGRhNzNhZGM5NDQ3YWMyNTIyIiwidXNlcl9pZCI6Mn0.iJSw7YwP3eN8jLMg-oW8SyajhaXZb1GImPcP8xYlIqg
+
+{
+  "shopping_cart": 1,
+  "retail_store": 1,
+  "stock": 1,
+  "quantity": 5,
+  "price": 50000,
+  "amount": 200000
+}
+###
+
+
+
+
+# редактировать категорию (только админ) +
+PATCH http://127.0.0.1:8000/api/v1/categories/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzQyNjAzLCJpYXQiOjE2OTA3NTA2MDMsImp0aSI6IjFjMTYzOGE0MzEyNzRlZGRhNzNhZGM5NDQ3YWMyNTIyIiwidXNlcl9pZCI6Mn0.iJSw7YwP3eN8jLMg-oW8SyajhaXZb1GImPcP8xYlIqg
+
+{
+  "name": "Салаты",
+  "description": "Овощные"
+}
+###
+
+# удалить категорию (только админ) +
+DELETE http://127.0.0.1:8000/api/v1/categories/3/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzQyNjAzLCJpYXQiOjE2OTA3NTA2MDMsImp0aSI6IjFjMTYzOGE0MzEyNzRlZGRhNzNhZGM5NDQ3YWMyNTIyIiwidXNlcl9pZCI6Mn0.iJSw7YwP3eN8jLMg-oW8SyajhaXZb1GImPcP8xYlIqg
+###
+
+
+# редактировать позицию заказа (только админ) +
+PATCH http://127.0.0.1:8000/api/v1/order_position/6/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyNjMyMzA3LCJpYXQiOjE2OTI1NDU5MDcsImp0aSI6ImE1MzkwNjc2OTJlMTQ3Mzg5NDQ4ZTg4M2U5YjBkYjljIiwidXNlcl9pZCI6NH0.rZvylhpiB0RMgxsPgHZ3n2KcdHDVlzXCefVn7rvhqxk
+
+{
+  "confirmed": true,
+  "delivered": true
+}
+###
+
+
+
+# поиск продуктов по названию и описанию +
+GET http://127.0.0.1:8000/api/v1/products/?search=лук
+Content-Type: application/json
+###
+
+# создание склада +
+POST http://127.0.0.1:8000/api/v1/stocks/
+Content-Type: application/json
+
+{
+  "address": "Спб, Восстания 1",
+  "positions": [
+    {
+      "product": 6,
+      "quantity": 66,
+      "price": 666
+    },
+    {
+      "product": 7,
+      "quantity": 77,
+      "price": 777
+    },
+    {
+      "product": 8,
+      "quantity": 88,
+      "price": 888
+    }
+  ]
+}
+
+###
+
+# обновляем записи на складе +
+PATCH http://127.0.0.1:8000/api/v1/stocks/18/
+Content-Type: application/json
+
+{
+  "positions": [
+    {
+      "product": 6,
+      "quantity": 400,
+      "price": 3
+    },
+    {
+      "product": 8,
+      "quantity": 300,
+      "price": 890
+    }
+  ]
+}
+
+###
+
+# поиск складов, где есть определенный продукт+
+GET http://127.0.0.1:8000/api/v1/stocks/?products=6&ordering=positions__price
+Content-Type: application/json
