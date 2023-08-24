@@ -38,7 +38,7 @@
 
 - клонировать репозиторий:
 ```
-git clone https://github.com/RMS83/Graduation_project.git
+git clone https://github.com/RMS83/graduation_project.git
 ```
 - установить все необходимые зависимости из requirements.txt
 ```
