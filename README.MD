@@ -71,8 +71,8 @@ python manage.py runserver
 python manage.py export_products
 ```
 
-Примеры запросов к API представлены в файле requests-examples.http
-Пример файла для импорта товаров поставщиком import_products
+- Примеры запросов к API представлены в файле requests-examples.http
+- Пример файла для импорта товаров поставщиком import_products
 
 ### Andpoint:
 - Создание пользователя: http://127.0.0.1:8000/register/
