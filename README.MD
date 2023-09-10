@@ -40,6 +40,18 @@
 ```
 git clone https://github.com/RMS83/graduation_project.git
 ```
+- создайте приложение в соцсети VK и заполните поля соответветствующие поля default в settings.py:
+```html
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        'APP': {
+            'client_id': os.getenv('VK_CLIENT_ID', default=" "),
+            'secret': os.getenv('VK_SECRET_KEY', default=" "),
+            'key': ''
+        }
+    }
+}
+```
 - установить все необходимые зависимости из requirements.txt
 ```
 pip install -r requirements.txt
@@ -71,8 +83,23 @@ python manage.py runserver
 python manage.py export_products
 ```
 
-Примеры запросов к API представлены в файле requests-examples.http
-Пример файла для импорта товаров поставщиком import_products
+- Примеры запросов к API представлены в файле requests-examples.http
+- Пример файла для импорта товаров поставщиком import_products
+
+##### Тестирование:
+- Для тестирования приложения выполните команду
+```
+pytest
+```
+
+##### Троттлинг:
+- Для пользователей API установлены ограничения по количеству запросов:
+```html
+'DEFAULT_THROTTLE_RATES': {
+        'anon': '60/minute',
+        'user': '360/minute'
+    },
+```
 
 ### Andpoint:
 - Создание пользователя: http://127.0.0.1:8000/register/
@@ -96,6 +123,9 @@ python manage.py export_products
 - Статусы: http://127.0.0.1:8000/api/v1/status/
 - Статусы заказов: http://127.0.0.1:8000/api/v1/order_status/
 - Импорт товаров поставщиком: http://127.0.0.1:8000/import
+- Регистрация пользователя через соцсеть VK: http://127.0.0.1:8000/accounts/vk/login/
 
 ### Схема модели базы данных:
 ![BD](Ordering_API_v.2.drawio.png)
+
+

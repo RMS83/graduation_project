@@ -25,6 +25,13 @@ COPY . /code
 # file execution permissions
 RUN chmod +x code/entrypoint.sh
 
+#add root ssl
+RUN apt-get update  \
+    && apt-get install -y ca-certificates --no-install-recommends \
+    && update-ca-certificates \
+    && rm -rf /var/lib/apt/list/*
+
+
 # set work directory
 WORKDIR /code
 

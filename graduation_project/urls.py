@@ -33,5 +33,6 @@ urlpatterns = [
     path("users/", UserAPIView.as_view(), name="user-info"),
     path("api/v1/", include("order_app.urls", namespace="order_app")),
     path("api-auth/", include("rest_framework.urls")),
-    path("import/", ImportView.as_view())
+    path("import/", ImportView.as_view()),
+    path('accounts/', include('allauth.urls')),
 ]

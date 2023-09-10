@@ -1,6 +1,6 @@
 # примеры API-запросов
 
-#1 регистрация пользователя (автоматически создает сущности покупателя/продавца/корзины)+
+#1 регистрация пользователя (автоматически создает сущности покупателя/продавца/корзины/токены)+
 POST http://localhost:8000/register/
 Content-Type: application/json
 
@@ -405,9 +405,31 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
 ###
 
-#48 удалить свой ордер если не подтверждены позиции +
+#48 удалить свой ордер если не подтверждены позиции или доставка +
 DELETE http://127.0.0.1:8000/api/v1/orders/1/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
 ###
 
+#49 просмотреть заказы со статусами (если есть) +
+GET http://127.0.0.1:8000/api/v1/orders/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#50 просмотреть позиции заказа +
+GET http://127.0.0.1:8000/api/v1/order_position/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+###
+
+#51 изменить статусы позиций заказа (вендор) +
+GET http://127.0.0.1:8000/api/v1/order_position/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyOTU4MDQ0LCJpYXQiOjE2OTI4NzE2NDQsImp0aSI6IjAyYTYwOWRhMTI3ZDRlYzI5N2ZiZWE2ZjcyZTE3OGViIiwidXNlcl9pZCI6NH0.0NZ8mawQpUwe7vVriE9MrBzaUn_KYS1jVFsEEL2QYVQ
+
+{
+  "confirmed": true,
+  "delivered": true
+}
+###

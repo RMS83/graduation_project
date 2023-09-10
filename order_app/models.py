@@ -4,11 +4,12 @@ from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import RegexValidator, MinValueValidator
-
+# from allauth.socialaccount.models import authenticate
 
 
 # _____________________________Область пользователя__________________________
@@ -19,6 +20,7 @@ USER_TYPE_CHOICES = (
     ("purchaser", "Покупатель"),
     ("vendor", "Поставщик"),
 )
+
 
 class UserManager(BaseUserManager):
 
@@ -85,11 +87,25 @@ class User(AbstractBaseUser, PermissionsMixin):
     # List of field names that will be requested when creating a superuser
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[UnicodeUsernameValidator()],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+        blank=True,
+    )
+
     email = models.EmailField(
         verbose_name=_("email address"), max_length=255, unique=True
     )
 
     # last_login field supplied by AbstractBaseUser
+
     first_name = models.CharField(_("first name"), max_length=30, blank=True)
     last_name = models.CharField(_("last name"), max_length=100, blank=True)
 

@@ -36,10 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'order_app.apps.OrderAppConfig',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'graduation_project.urls'
@@ -81,7 +87,7 @@ DATABASES = {
         'ENGINE': os.getenv('ENGINE_DB', default='django.db.backends.postgresql'),
         'NAME': os.getenv('POSTGRES_DB', default='order_app'),
         'USER': os.getenv('POSTGRES_USER', default='postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='4704961896'),
         'HOST': os.getenv('POSTGRES_HOST', default='127.0.0.1'),
         'PORT': os.getenv('POSTGRES_PORT', default='5432')
     }
@@ -129,7 +135,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -153,6 +159,25 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
 }
+
+SITE_ID=1
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        'APP': {
+            'client_id': os.getenv('VK_CLIENT_ID', default=" "),
+            'secret': os.getenv('VK_SECRET_KEY', default=" "),
+            'key': ''
+        }
+    }
+}
+
+LOGIN_REDIRECT_URL = '/accounts/vk/login/'
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", default='django.core.mail.backends.smtp.EmailBackend')
 # EMAIL_USE_TLS = True
@@ -183,7 +208,17 @@ REST_FRAMEWORK = {
         ),
 
     "DEFAULT_PAGINATION_CLASS":  "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10
- }
+    "PAGE_SIZE": 10,
+
+    'DEFAULT_THROTTLE_CLASSES': ('rest_framework.throttling.AnonRateThrottle',
+                                 'rest_framework.throttling.UserRateThrottle'
+                                 ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '60/minute',
+        'user': '360/minute'
+    },
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
 
 
